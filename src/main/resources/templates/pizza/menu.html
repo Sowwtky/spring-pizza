@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="fragments/risorse :: risorse-head"></th:block>
+    <title>Menú</title> 
+  </head>
+  <body>
+  <nav th:replace="fragments/navbar :: navbar('menu')"></nav>
+  <div class="container">
+  	<h1>Menú</h1>
+  	<hr/>
+  	<a class="btn btn-primary" th:href="@{/add}">Aggiungi</a>
+  	<table class="table" th:if="${pizza.size() > 0}">
+  		<thead>
+  			<tr>
+	  			<th>Nome</th>
+	  			<th>Descrizione</th>
+	  			<th>Prezzo</th>
+  			</tr>
+  		</thead>
+  		<tbody>
+  			<tr th:each="p : ${pizza}">
+  				<td th:text="${p.nome}"></td>
+	  			<td th:text="${p.descrizione}"></td>
+	  			<td th:text="${p.prezzo}"></td>
+	  			
+  			</tr>
+  		</tbody>
+  	</table>
+  </div>
+  <div class="alert alert-info my-5" th:unless="${pizza.size() > 0}">
+  	<h3>Nessuna pizza nel menú</h3>
+  </div>
+  </body>
+</html>
