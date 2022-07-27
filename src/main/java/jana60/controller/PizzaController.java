@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jana60.model.Pizza;
+import jana60.repository.IngredientiRepository;
 import jana60.repository.PizzaRepository;
 
 @Controller
@@ -28,6 +29,9 @@ public class PizzaController {
 
 	@Autowired
 	private PizzaRepository repo;
+	
+	@Autowired
+	private IngredientiRepository ingredientiRepo;
 	
 	@GetMapping
 	public String pizzaList(Model model) {
@@ -38,6 +42,7 @@ public class PizzaController {
 	@GetMapping("/add")
 	public String pizzaForm(Model model) {
 		model.addAttribute("pizza", new Pizza());
+		model.addAttribute("listaIngredienti", ingredientiRepo.findAllByOrderByNome());
 		return "/pizza/edit";
 	}
 	
@@ -58,6 +63,7 @@ public class PizzaController {
 		    }
 		 
 	    if (hasErrors) {
+	    	model.addAttribute("listaIngredienti", ingredientiRepo.findAllByOrderByNome());
 	      return "/pizza/edit";
 	    } else {
 	    	
@@ -65,6 +71,7 @@ public class PizzaController {
 			repo.save(formPizza);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Unable to save the pizza");
+			model.addAttribute("listaIngredienti", ingredientiRepo.findAllByOrderByNome());
 			return "/pizza/edit";
 		}
 	      
@@ -90,6 +97,7 @@ public class PizzaController {
 	    Optional<Pizza> result = repo.findById(pizzaId);
 	    if (result.isPresent()) {
 	      model.addAttribute("pizza", result.get());
+	      model.addAttribute("listaIngredienti", ingredientiRepo.findAllByOrderByNome());
 	      return "/pizza/edit";
 	    } else {
 	      throw new ResponseStatusException(HttpStatus.NOT_FOUND,

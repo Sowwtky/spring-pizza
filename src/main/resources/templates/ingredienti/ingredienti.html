@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments/risorse :: risorse-head"></th:block>
+<title>Categories</title>
+</head>
+<body>
+	<nav th:replace="fragments/navbar :: navbar('ingredienti')"></nav>
+	<div class="container">
+		<h1>Ingredienti</h1>
+		<hr />
+		<div class="col-6">
+			<form 
+				id="form-ingredienti" 
+				th:object="${nuovoIngrediente}"
+				th:action="@{/ingredienti/add}" 
+				method="POST">
+
+				<div class="input-group mb-3 has-validation">
+					<input th:field="*{nome}" type="text" class="form-control"
+						placeholder="Aggiungi ingrediente" aria-label="Aggiungi ingrediente"
+						aria-describedby="ingredienti-button" th:errorClass="is-invalid">
+					<button class="btn btn-primary" type="submit" id="ingredienti-button">Salva</button>
+					<div th:if="${#fields.hasErrors('nome')}" class="invalid-feedback">
+						<ul>
+							<li th:each="err : ${#fields.errors('nome')}" th:text="${err}">
+						</ul>
+					</div>		
+				</div>
+
+			</form>
+			<ul class="list-group" th:if="${ingredienti.size() > 0}">
+				<li class="list-group-item" th:each="ing : ${ingredienti}">
+					<span th:text="${ing.nome}"></span>
+					<span 
+						class="badge rounded-pill text-bg-info" 
+						th:text="${ing.pizza.size()}" 
+						th:if="${ing.getNumberOfIngredienti() > 0}">
+					</span>					
+				</li>
+			</ul>
+			<div class="alert alert-info my-5"
+				th:unless="${ingredienti.size() > 0}">
+				<h3>There are no ingredients yet</h3>
+			</div>
+			
+		</div>
+	</div>
+
+</body>
+</html>
