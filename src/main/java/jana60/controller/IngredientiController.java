@@ -1,17 +1,24 @@
 package jana60.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jana60.model.Ingredienti;
+import jana60.model.Pizza;
 import jana60.repository.IngredientiRepository;
 
 @Controller
@@ -43,4 +50,16 @@ public class IngredientiController {
 
 	  }
 	
+	 @GetMapping("/delete/{id}")
+	  public String delete(@PathVariable("id") Integer ingredienteId, RedirectAttributes ra) {
+	    Optional<Ingredienti> result = repo.findById(ingredienteId);
+	    if (result.isPresent()) {
+	      repo.delete(result.get());
+	      ra.addFlashAttribute("successMessage", "Ingrediente " + result.get().getNome() + " eliminato!");
+	      return "redirect:/ingredienti";
+	    } else {
+	      throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+	          "Ingrediente con id " + ingredienteId + " non presente");
+	    }
+	  }
 }

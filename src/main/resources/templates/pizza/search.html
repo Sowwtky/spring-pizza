@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="fragments/risorse :: risorse-head"></th:block>
+    <title>Menú</title> 
+  </head>
+  <body>
+  <nav th:replace="fragments/navbar :: navbar('search')"></nav>
+  
+  <div class="container">
+  <h1>Cerca</h1>
+  <hr/>
+  	<form action="/search" class="col-6">
+	    	<input class="form-control my-3" type="text" name="queryNome" placeholder="Cerca per nome">
+	    	<button class= "btn btn-primary">Cerca</button>
+    </form>
+  </div>  
+  </body>
+</html>

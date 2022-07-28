@@ -1,6 +1,7 @@
 package jana60.controller;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,6 +38,19 @@ public class PizzaController {
 	@GetMapping
 	public String pizzaList(Model model) {
 		model.addAttribute("pizza", repo.findAll());
+		return "/pizza/menu";
+	}
+	
+	
+	@GetMapping("/advanced_search")
+	public String advancedSearch() {
+		return "/pizza/search";
+	}
+	
+	@GetMapping("/search")
+	public String search(@RequestParam(name = "queryNome") String queryNome, Model model) {
+		List<Pizza> pizza = repo.findByNomeContainingIgnoreCase(queryNome);
+		model.addAttribute("pizza", pizza);
 		return "/pizza/menu";
 	}
 	
@@ -88,7 +103,7 @@ public class PizzaController {
 	      return "redirect:/";
 	    } else {
 	      throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-	          "Book con id " + pizzaId + " non presente");
+	          "Pizza con id " + pizzaId + " non presente");
 	    }
 	  }
 	 
