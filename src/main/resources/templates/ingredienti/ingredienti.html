@@ -42,12 +42,14 @@
 						th:if="${ing.getNumberOfIngredienti() > 0}">
 					</span>		
 					<span class="d-flex justify-content-end">
-						<a class="btn btn-primary d-flex justify-content-end" th:href="@{|/ingredienti/delete/${ing.id}|}" title="Delete" onclick="return confirm('ATTENZIONE! Assicurati di eliminare prima questo ingrediente dalle pizze')">
+						<a class="btn btn-primary" th:href="@{|/ingredienti/delete/${ing.id}|}" title="Delete" onclick="return confirm('ATTENZIONE! Assicurati di eliminare prima questo ingrediente dalle pizze')">
 		  					<i class="fa-solid fa-trash-can"></i>
 		  				</a>
 					</span>			
 				</li>
+				
 			</ul>
+			
 			<div class="alert alert-info my-5"
 				th:unless="${ingredienti.size() > 0}">
 				<h3>There are no ingredients yet</h3>
