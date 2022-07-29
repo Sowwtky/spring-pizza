@@ -119,4 +119,15 @@ public class PizzaController {
 	          "Pizza con id " + pizzaId + " non presente");
 	    }
 	  }
+	 
+	 @GetMapping("/detail/{id}")
+	 public String detail(@PathVariable("id") Integer pizzaId, Model model) {
+		 Optional<Pizza> pizza = repo.findById(pizzaId);
+		 if(pizza.isPresent()) {
+			 model.addAttribute("pizza", pizza.get());
+			 return "/pizza/detail";
+		 } else {
+			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza con id " + pizzaId + " non presente!");
+		 }
+	 }
 }

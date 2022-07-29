@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <th:block th:replace="fragments/risorse :: risorse-head"></th:block>
-<title>Categories</title>
+<title>Ingredienti</title>
 </head>
 <body>
 	<nav th:replace="fragments/navbar :: navbar('ingredienti')"></nav>
@@ -23,7 +23,7 @@
 					<input th:field="*{nome}" type="text" class="form-control"
 						placeholder="Aggiungi ingrediente" aria-label="Aggiungi ingrediente"
 						aria-describedby="ingredienti-button" th:errorClass="is-invalid">
-					<button class="btn btn-primary" type="submit" id="ingredienti-button">Salva</button>
+					<button class="btn btn-success" type="submit" id="ingredienti-button">Salva</button>
 					<div th:if="${#fields.hasErrors('nome')}" class="invalid-feedback">
 						<ul>
 							<li th:each="err : ${#fields.errors('nome')}" th:text="${err}">
@@ -42,7 +42,7 @@
 						th:if="${ing.getNumberOfIngredienti() > 0}">
 					</span>		
 					<span class="d-flex justify-content-end">
-						<a class="btn btn-primary" th:href="@{|/ingredienti/delete/${ing.id}|}" title="Delete" onclick="return confirm('ATTENZIONE! Assicurati di eliminare prima questo ingrediente dalle pizze')">
+						<a class="btn btn-danger" th:href="@{|/ingredienti/delete/${ing.id}|}" title="Delete" onclick="return confirm('ATTENZIONE! Assicurati di eliminare prima questo ingrediente dalle pizze')">
 		  					<i class="fa-solid fa-trash-can"></i>
 		  				</a>
 					</span>			

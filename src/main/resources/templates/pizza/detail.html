@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="fragments/risorse :: risorse-head"></th:block>
+    <title th:text="${pizza.nome}"></title> 
+  </head>
+  <body>
+  <nav th:replace="fragments/navbar :: navbar('menu')"></nav>
+  <div class="container">
+  	
+  	<th:block th:if="${successMessage != null && successMessage != ''}">
+  		<div  class="alert alert-success" th:text="${successMessage}"></div>
+  	</th:block>
+
+  	<h1 th:text="${pizza.nome}"></h1>
+  	<hr/>
+	<div class="row">
+  		<div class="col-6">
+  			<dl th:object="${pizza}">
+  				<dt>Descrizione</dt>
+  				<dd th:text="*{descrizione}"></dd>
+  				<dt>Prezzo</dt>
+  				<dd th:text="|*{prezzo}€|"></dd>
+  			</dl>
+  		</div>
+  		
+  		<div class="col-6">
+  			<dt>Ingredienti</dt>
+  			<ul>
+  				<li th:each="ing : ${pizza.ingredienti}" th:text="${ing.nome}"></li>
+  			</ul>
+  		</div>
+  </div>
+  
+  <a class="btn btn-primary" href="/">Home</a>
+
+  </body>
+</html>
