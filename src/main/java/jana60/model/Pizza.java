@@ -14,6 +14,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="pizza")
 public class Pizza {
@@ -34,6 +36,7 @@ public class Pizza {
 	private float prezzo;
 	
 	@ManyToMany
+	@JsonManagedReference
 	private List<Ingredienti> ingredienti;
 	
 	//getter e setter
